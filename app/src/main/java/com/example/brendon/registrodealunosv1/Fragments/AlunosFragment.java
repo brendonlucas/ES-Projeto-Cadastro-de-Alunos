@@ -1,5 +1,7 @@
 package com.example.brendon.registrodealunosv1.Fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +10,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.example.brendon.registrodealunosv1.Formularios.FormularioAddAluno;
 import com.example.brendon.registrodealunosv1.Adapters.AlunoAdapter;
@@ -27,6 +33,7 @@ public class AlunosFragment extends Fragment {
     RecyclerView recicleAlunos;
     public static final int REQUEST_CODE = 1001;
     FloatingActionButton fab;
+    AlunoAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,13 +62,12 @@ public class AlunosFragment extends Fragment {
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                AlunoAdapter adapter = new AlunoAdapter(getContext(), boxAlunos);
+                adapter = new AlunoAdapter(getContext(), boxAlunos);
                 recicleAlunos.setLayoutManager(new LinearLayoutManager(getContext()));
                 recicleAlunos.setAdapter(adapter);
 
             }
         }
     }
-
 }
 

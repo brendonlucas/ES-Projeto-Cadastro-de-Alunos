@@ -16,8 +16,14 @@ import io.objectbox.Box;
 
 
 public class FormularioAddFaculdade extends AppCompatActivity {
+
+    public static long DEFAULT_VALUE = -1;
+    public static String ID = "idFaculdade";
+
     EditText nome_faculdade, email, contato;
     Box<Faculdade> boxFaculdades;
+    Faculdade faculdade;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +31,19 @@ public class FormularioAddFaculdade extends AppCompatActivity {
         setContentView(R.layout.activity_formulario_add_faculdade);
 
         boxFaculdades = ((App)getApplication()).getBoxStore().boxFor(Faculdade.class);
+        faculdade = new Faculdade("", "", "");
 
         nome_faculdade = findViewById(R.id.edt_nome_faculdade);
         email = findViewById(R.id.edt_email);
         contato = findViewById(R.id.edt_contato);
+
+        long id = getIntent().getLongExtra(ID, DEFAULT_VALUE);
+        if (id != DEFAULT_VALUE){
+            faculdade = boxFaculdades.get(id);
+            nome_faculdade.setText(faculdade.getNome());
+            email.setText(faculdade.getEmail());
+            contato.setText(faculdade.getContatoPrincipal());
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +63,10 @@ public class FormularioAddFaculdade extends AppCompatActivity {
                     Toast.makeText(this, "Dados insuficientes", Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent();
-                    boxFaculdades.put(new Faculdade(nome_da_faculdade,email_faculdade,contato_faculdade));
+                    faculdade.setNome(nome_da_faculdade);
+                    faculdade.setEmail(email_faculdade);
+                    faculdade.setContatoPrincipal(contato_faculdade);
+                    boxFaculdades.put(faculdade);
                     Toast.makeText(this, "Nova Faculdade adicionada", Toast.LENGTH_LONG).show();
                     setResult(RESULT_OK, intent);
                     finish();

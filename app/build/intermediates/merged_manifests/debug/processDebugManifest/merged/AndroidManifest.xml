@@ -29,9 +29,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.defaut_seachable"
+                android:value=".SeachableActivity" />
         </activity>
-        <activity android:name="com.example.brendon.registrodealunosv1.Formularios.FormularioAddAluno" />
-        <activity android:name="com.example.brendon.registrodealunosv1.Formularios.FormularioAddFaculdade" />
+        <activity
+            android:name="com.example.brendon.registrodealunosv1.Formularios.FormularioAddAluno"
+            android:label="Novo Aluno"
+            android:parentActivityName="com.example.brendon.registrodealunosv1.MainActivity" />
+        <activity
+            android:name="com.example.brendon.registrodealunosv1.Formularios.FormularioAddFaculdade"
+            android:label="Nova Faculdade"
+            android:parentActivityName="com.example.brendon.registrodealunosv1.MainActivity" />
     </application>
 
 </manifest>

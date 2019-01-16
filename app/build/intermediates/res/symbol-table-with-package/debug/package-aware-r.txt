@@ -1073,7 +1073,6 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
-id action_settings
 id action_text
 id actions
 id activity_chooser_view_content
@@ -1113,6 +1112,7 @@ id design_menu_item_action_area_stub
 id design_menu_item_text
 id design_navigation_view
 id dimensions
+id diplomar
 id direct
 id disableHome
 id drawer_layout
@@ -1183,6 +1183,10 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id op_editar
+id op_editar_faculdade
+id op_remover
+id op_remover_faculdade
 id op_salvar
 id outline
 id packed
@@ -1210,6 +1214,7 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollable
+id search
 id search_badge
 id search_bar
 id search_button
@@ -1400,6 +1405,8 @@ layout support_simple_spinner_dropdown_item
 menu activity_main_drawer
 menu main
 menu menu_salvar
+menu pop_menu
+menu pop_menu_faculdade
 mipmap ic_launcher
 mipmap ic_launcher_round
 string abc_action_bar_home_description
@@ -1463,6 +1470,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string search_hint
 string search_menu_title
 string status_bar_notification_info_overflow
 string title_activity_inicio_

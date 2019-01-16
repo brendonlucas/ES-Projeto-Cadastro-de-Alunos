@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/aluno/Área de Trabalho/Cadastro_de_alunos-master/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
+            "outputFile": "C:\\Users\\Artur\\Documents\\Engenharia-de-SW\\ES-Projeto-Cadastro-de-Alunos\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
-                    "source": "/home/aluno/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/b10d56f38f3b3c4de6505bc4ec477722/res/values-v24/values-v24.xml",
+                    "source": "C:\\Users\\Artur\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7920f8ebc827e3cdc625fb8bbea06e8e\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/aluno/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/7edc108ea39f70fff978f903b1d8aa7d/res/values-v24/values-v24.xml",
+                    "source": "C:\\Users\\Artur\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-28.0.0.aar\\877a41eca8cf590ed1c2649dcd166d3d\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

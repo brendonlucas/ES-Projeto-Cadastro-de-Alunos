@@ -18,7 +18,7 @@
             android:title="Faculdades" />
         <item
             android:id="@+id/nav_alunos_diplomado"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/student"
             android:title="Alunos Diplomados" />
     </group>
 

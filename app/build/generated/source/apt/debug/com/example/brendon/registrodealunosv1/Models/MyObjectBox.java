@@ -19,9 +19,9 @@ public class MyObjectBox {
 
     public static BoxStoreBuilder builder() {
         BoxStoreBuilder builder = new BoxStoreBuilder(getModel());
-        builder.entity(Faculdade_.__INSTANCE);
-        builder.entity(Aluno_Diplomado_.__INSTANCE);
         builder.entity(Aluno_.__INSTANCE);
+        builder.entity(Aluno_Diplomado_.__INSTANCE);
+        builder.entity(Faculdade_.__INSTANCE);
         return builder;
     }
 
@@ -33,14 +33,14 @@ public class MyObjectBox {
 
         EntityBuilder entityBuilder;
 
-        entityBuilder = modelBuilder.entity("Faculdade");
-        entityBuilder.id(1, 160464098654339697L).lastPropertyId(4, 1496540287406969297L);
+        entityBuilder = modelBuilder.entity("Aluno");
+        entityBuilder.id(2, 2090084939150538365L).lastPropertyId(4, 4663334488051650941L);
         entityBuilder.flags(io.objectbox.model.EntityFlags.USE_NO_ARG_CONSTRUCTOR);
-        entityBuilder.property("id", PropertyType.Long).id(1, 7797716537239865528L)
+        entityBuilder.property("id", PropertyType.Long).id(1, 2660274649787054260L)
             .flags(PropertyFlags.ID | PropertyFlags.NOT_NULL);
-        entityBuilder.property("nome", PropertyType.String).id(2, 6843851974105517247L);
-        entityBuilder.property("email", PropertyType.String).id(3, 5297070583626502765L);
-        entityBuilder.property("contatoPrincipal", PropertyType.String).id(4, 1496540287406969297L);
+        entityBuilder.property("nome", PropertyType.String).id(2, 4077214170976597304L);
+        entityBuilder.property("curso", PropertyType.String).id(3, 4868611680983306117L);
+        entityBuilder.property("faculdade", PropertyType.String).id(4, 4663334488051650941L);
         entityBuilder.entityDone();
 
         entityBuilder = modelBuilder.entity("Aluno_Diplomado");
@@ -55,14 +55,14 @@ public class MyObjectBox {
             .flags(PropertyFlags.NOT_NULL);
         entityBuilder.entityDone();
 
-        entityBuilder = modelBuilder.entity("Aluno");
-        entityBuilder.id(2, 2090084939150538365L).lastPropertyId(4, 4663334488051650941L);
+        entityBuilder = modelBuilder.entity("Faculdade");
+        entityBuilder.id(1, 160464098654339697L).lastPropertyId(4, 1496540287406969297L);
         entityBuilder.flags(io.objectbox.model.EntityFlags.USE_NO_ARG_CONSTRUCTOR);
-        entityBuilder.property("id", PropertyType.Long).id(1, 2660274649787054260L)
+        entityBuilder.property("id", PropertyType.Long).id(1, 7797716537239865528L)
             .flags(PropertyFlags.ID | PropertyFlags.NOT_NULL);
-        entityBuilder.property("nome", PropertyType.String).id(2, 4077214170976597304L);
-        entityBuilder.property("curso", PropertyType.String).id(3, 4868611680983306117L);
-        entityBuilder.property("faculdade", PropertyType.String).id(4, 4663334488051650941L);
+        entityBuilder.property("nome", PropertyType.String).id(2, 6843851974105517247L);
+        entityBuilder.property("email", PropertyType.String).id(3, 5297070583626502765L);
+        entityBuilder.property("contatoPrincipal", PropertyType.String).id(4, 1496540287406969297L);
         entityBuilder.entityDone();
 
         return modelBuilder.build();

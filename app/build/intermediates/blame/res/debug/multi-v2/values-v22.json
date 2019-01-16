@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/aluno/Área de Trabalho/Cadastro_de_alunos-master/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml",
+            "outputFile": "C:\\Users\\Artur\\Documents\\Engenharia-de-SW\\ES-Projeto-Cadastro-de-Alunos\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v22\\values-v22.xml",
             "map": [
                 {
-                    "source": "/home/aluno/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/b10d56f38f3b3c4de6505bc4ec477722/res/values-v22/values-v22.xml",
+                    "source": "C:\\Users\\Artur\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7920f8ebc827e3cdc625fb8bbea06e8e\\res\\values-v22\\values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",

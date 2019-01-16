@@ -1,6 +1,7 @@
 package com.example.brendon.registrodealunosv1.Formularios;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -25,11 +26,16 @@ import java.util.List;
 import io.objectbox.Box;
 
 public class FormularioAddAluno extends AppCompatActivity {
+
+    public static long DEFAULT_VALUE = -1;
+    public static String ID = "idAluno";
+
     EditText nome_aluno, curso;
     Spinner spin_faculdades;
     Box<Faculdade> boxFaculdades;
     Box<Aluno> boxAlunos;
     List<String> lista_de_items = new ArrayList<>();
+    Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,7 @@ public class FormularioAddAluno extends AppCompatActivity {
 
         boxFaculdades = ((App)getApplication()).getBoxStore().boxFor(Faculdade.class);
         boxAlunos = ((App)getApplication()).getBoxStore().boxFor(Aluno.class);
+        aluno = new Aluno("", "", "");
 
         for (int i =0; i< boxFaculdades.getAll().size(); i++){
             Faculdade faculdadeAtual = this.boxFaculdades.getAll().get(i);
@@ -52,6 +59,12 @@ public class FormularioAddAluno extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin_faculdades.setAdapter(dataAdapter);
 
+        long id = getIntent().getLongExtra(ID, DEFAULT_VALUE);
+        if (id != -1){
+            aluno = boxAlunos.get(id);
+            nome_aluno.setText(aluno.getNome());
+            curso.setText(aluno.getCurso());
+        }
 
     }
     @Override
@@ -62,21 +75,34 @@ public class FormularioAddAluno extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.op_salvar:
-                String nome_do_aluno = nome_aluno.getText().toString();
-                String nome_curso = curso.getText().toString();
-                String faculdade = spin_faculdades.getSelectedItem().toString();
 
-                if (nome_do_aluno.equals("") || nome_curso.equals("") ){
-                    Toast.makeText(this, "Dados insuficientes", Toast.LENGTH_LONG).show();
-                } else {
-                    Intent intent = new Intent();
-                    boxAlunos.put(new Aluno(nome_do_aluno, nome_curso, faculdade));
-                    Toast.makeText(this, "Nova Faculdade adicionada", Toast.LENGTH_LONG).show();
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+        try {
+            switch (item.getItemId()){
+                case R.id.op_salvar:
+                    String nome_do_aluno = nome_aluno.getText().toString();
+                    String nome_curso = curso.getText().toString();
+                    String faculdade = spin_faculdades.getSelectedItem().toString();
+
+                    if (nome_do_aluno.equals("") || nome_curso.equals("") ){
+                        Toast.makeText(this, "Dados insuficientes", Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent intent = new Intent();
+                        aluno.setNome(nome_do_aluno);
+                        aluno.setCurso(nome_curso);
+                        aluno.setFaculdade(faculdade);
+                        boxAlunos.put(aluno);
+                        Toast.makeText(this, "Novo Aluno adicionado", Toast.LENGTH_LONG).show();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+        }
+
+        } catch (Exception e){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Erro")
+                    .setMessage("Não há faculdades cadastradas. Adicione uma e tente novamente")
+                    .create()
+                    .show();
         }
 
         return super.onOptionsItemSelected(item);

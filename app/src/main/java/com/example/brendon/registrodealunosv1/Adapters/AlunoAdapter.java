@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.brendon.registrodealunosv1.Formularios.FormularioAddAluno;
 import com.example.brendon.registrodealunosv1.Models.Aluno;
 import com.example.brendon.registrodealunosv1.Models.Aluno_Diplomado;
 import com.example.brendon.registrodealunosv1.Models.Faculdade;
@@ -26,6 +29,8 @@ import com.example.brendon.registrodealunosv1.dal.App;
 import io.objectbox.Box;
 
 public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHolder> {
+
+    public static String ID = "idAluno";
 
     private Context context;
     private Box<Aluno> listAlunos;
@@ -54,83 +59,110 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
 
         holder.txtNome.setText("Nome: " + alunoAtual.getNome());
         holder.txtCurso.setText("Curso: " + alunoAtual.getCurso());
-        holder.txtFaculdade.setText("Faculdade " + alunoAtual.getFaculdade());
+        holder.txtFaculdade.setText("Faculdade: " + alunoAtual.getFaculdade());
 
-        holder.editar_aluno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // implementar edição de aluno
-            }
+        imageMenus(holder.itemView, alunoAtual, position);
+        popMenu(holder.itemView, alunoAtual, position);
+
+
+    }
+
+    private void popMenu(View itemView, Aluno aluno, int position){
+        itemView.setOnLongClickListener((view ) -> {
+            PopupMenu popup = new PopupMenu(context, view);
+            popup.getMenuInflater().inflate(R.menu.pop_menu, popup.getMenu());
+
+            popup.setOnMenuItemClickListener((item) -> {
+
+                switch (item.getItemId()){
+                    case R.id.op_editar:
+
+                        Intent intent = new Intent(context, FormularioAddAluno.class);
+                        intent.putExtra(ID, aluno.id);
+                        context.startActivity(intent);
+                        notifyItemChanged(position);
+                        break;
+
+                    case R.id.op_remover:
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                        alerta.setTitle("Remover")
+                            .setMessage("Deseja remover aluno(a): " + aluno.getNome()+" ?")
+                            .setPositiveButton("Sim", (arg0, arg1) -> {
+                            listAlunos.remove(aluno);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, getItemCount());
+                            Snackbar.make(view,"Removido com sucesso!", Snackbar.LENGTH_LONG).show();
+                        })
+                            .setNegativeButton("Nao", (arg0, arg1) -> {
+                        })
+                            .create()
+                            .show();
+                        break;
+
+                    case R.id.diplomar:
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("Diplomar Aluno")
+                        .setMessage("Deseja diplomar aluno(a): " + aluno.getNome()+" ?")
+                        .setPositiveButton("Sim", (arg0, arg1) -> {
+
+                            String nome = aluno.getNome();
+                            String curso= aluno.getCurso();
+                            String faculdade = aluno.getFaculdade();
+                            boolean diplomado = true;
+                            BoxAlunosDiplomados.put(new Aluno_Diplomado(nome,curso,faculdade,diplomado));
+                            Snackbar.make(view,"Aluno diplomado com sucesso!", Snackbar.LENGTH_LONG).show();
+                        })
+                        .setNegativeButton("Não", (arg0, arg1) -> { })
+                        .create()
+                        .show();
+                        break;
+                }
+
+                return false;
+            });
+
+            popup.show();
+
+            return true;
+        });
+    }
+
+    private void imageMenus(View itemView, Aluno aluno, int position){
+        ImageButton editar = itemView.findViewById(R.id.editar_aluno);
+        ImageButton excluir = itemView.findViewById(R.id.excluir_aluno);
+
+        editar.setOnClickListener(l ->{
+            Intent intent = new Intent(context, FormularioAddAluno.class);
+            intent.putExtra(ID, aluno.id);
+            context.startActivity(intent);
+            notifyItemChanged(position);
         });
 
-        holder.excluir_aluno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                AlertDialog alerta;
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Remover");
-                builder.setMessage("Deseja remover aluno(a): " + alunoAtual.getNome()+" ?");
-                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        listAlunos.remove(alunoAtual);
-                        notifyItemRemoved(position);
-                        Snackbar.make(view,"Removido com sucesso!", Snackbar.LENGTH_LONG).show();
-                    }
-                });
-                builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                alerta = builder.create();
-                alerta.show();
-
-            }
+        excluir.setOnClickListener(l ->{
+            AlertDialog alerta;
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Remover");
+            builder.setMessage("Deseja remover aluno(a): " + aluno.getNome()+" ?");
+            builder.setPositiveButton("Sim", (arg0, arg1) -> {
+                listAlunos.remove(aluno);
+                notifyItemRangeChanged(position, getItemCount());
+                notifyItemRemoved(position);
+                Snackbar.make(l,"Removido com sucesso!", Snackbar.LENGTH_LONG).show();
+            });
+            builder.setNegativeButton("Não", (arg0, arg1) -> { });
+            alerta = builder.create();
+            alerta.show();
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        editar.setOnLongClickListener(l ->{
+            Toast.makeText(context, "Editar", Toast.LENGTH_LONG).show();
+            return true;
         });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(final View view) {
-
-                final PopupMenu menupop = new PopupMenu(AlunoAdapter.this.context, view,position);
-                menupop.getMenu().add("Diplomar Aluno").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        AlertDialog alerta;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Diplomar Aluno");
-                        builder.setMessage("Deseja diplomar aluno(a): " + alunoAtual.getNome()+" ?");
-                        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0, int arg1) {
-
-                                String nome = alunoAtual.getNome();
-                                String curso= alunoAtual.getCurso();
-                                String faculdade = alunoAtual.getFaculdade();
-                                boolean diplomado = true;
-                                BoxAlunosDiplomados.put(new Aluno_Diplomado(nome,curso,faculdade,diplomado));
-                                Snackbar.make(view,"Aluno diplomado com sucesso!", Snackbar.LENGTH_LONG).show();
-                            }
-                        });
-                        builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0, int arg1) {
-
-                            }
-                        });
-                        alerta = builder.create();
-                        alerta.show();
-                        return false;
-                    }
-                });
-                menupop.show();
-
-                return true;
-            }
+        excluir.setOnLongClickListener(l ->{
+            Toast.makeText(context, "Excluir", Toast.LENGTH_LONG).show();
+            return true;
         });
     }
 
@@ -141,15 +173,13 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
 
     public class AlunoViewHolder extends RecyclerView.ViewHolder {
         TextView txtNome, txtCurso, txtFaculdade;
-        ImageButton excluir_aluno, editar_aluno;
 
         public AlunoViewHolder(View view) {
             super(view);
             txtNome = view.findViewById(R.id.view_nome_aluno);
             txtCurso = view.findViewById(R.id.view_curso);
             txtFaculdade = view.findViewById(R.id.view_faculdade);
-            excluir_aluno = view.findViewById(R.id.excluir_aluno);
-            editar_aluno = view.findViewById(R.id.editar_aluno);
+
         }
     }
 }

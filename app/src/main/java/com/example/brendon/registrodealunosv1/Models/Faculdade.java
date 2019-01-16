@@ -34,4 +34,16 @@ public class Faculdade {
     public String getContatoPrincipal() {
         return contatoPrincipal;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setContatoPrincipal(String contatoPrincipal) {
+        this.contatoPrincipal = contatoPrincipal;
+    }
 }
